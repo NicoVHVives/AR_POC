@@ -1,0 +1,3 @@
+FL01-INV-M001.png|C:\Vives\2023-2024\TrendsAndBusinessinIT\POC_AR\app\src\main\res\drawable/FL01-INV-M001.png
+FL01-OVN-M002.png|C:\Vives\2023-2024\TrendsAndBusinessinIT\POC_AR\app\src\main\res\drawable/FL01-OVN-M002.png
+FL01-UIT-M008.png|C:\Vives\2023-2024\TrendsAndBusinessinIT\POC_AR\app\src\main\res\drawable/FL01-UIT-M008.png
