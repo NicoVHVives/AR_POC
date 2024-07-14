@@ -35,7 +35,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             childNode.rotation = Rotation(0.0f,90.0f,0.0f)
             childNode.scale = Scale(-1.0f,1f, 1f)
             childNode.loadView(context, R.layout.card_view,  onLoaded = { _, view ->
-                var titleNode = view.findViewById<TextView>(R.id.node_title)
+                val titleNode = view.findViewById<TextView>(R.id.node_title)
                 titleNode.setText(data)
                 node.addChildNode(childNode)
             })
@@ -48,12 +48,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         sceneView = view.findViewById<ARSceneView>(R.id.sceneView).apply {
             configureSession { session, config ->
-                var db: AugmentedImageDatabase;
+                var db: AugmentedImageDatabase
 
                 requireContext().assets.open("arImgDatabase.imgdb").apply {
                     db = AugmentedImageDatabase.deserialize(session,this)
                 }
-                config.augmentedImageDatabase = db;
+                config.augmentedImageDatabase = db
 
             }
             onSessionUpdated = { _, frame ->
