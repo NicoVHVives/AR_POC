@@ -1,17 +1,22 @@
 package be.jedisoft.myapplication
 
-import android.graphics.BitmapFactory
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.ar.core.AugmentedImageDatabase
+import com.google.ar.sceneform.rendering.ViewAttachmentManager
 import io.github.sceneview.ar.ARSceneView
 import io.github.sceneview.ar.arcore.getUpdatedAugmentedImages
 import io.github.sceneview.ar.node.AugmentedImageNode
-import io.github.sceneview.math.Position
-import io.github.sceneview.node.ImageNode
-import io.github.sceneview.node.ModelNode
+import io.github.sceneview.math.Rotation
+import io.github.sceneview.math.Scale
+import io.github.sceneview.node.Node
+import io.github.sceneview.node.ViewNode
+import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -19,6 +24,24 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     lateinit var sceneView: ARSceneView
 
     val augmentedImageNodes = mutableListOf<AugmentedImageNode>()
+
+    fun generateViewNode(context: Context, node: Node, data: String){
+        lifecycleScope.launch {
+            val attachmentManager =
+                ViewAttachmentManager(context, sceneView)
+            attachmentManager.onResume()
+            val childNode = ViewNode(sceneView.engine, sceneView.modelLoader, attachmentManager)
+            //Rotate the node so that it come's readable above the QR-Code
+            childNode.rotation = Rotation(0.0f,90.0f,0.0f)
+            childNode.scale = Scale(-1.0f,1f, 1f)
+            childNode.loadView(context, R.layout.card_view,  onLoaded = { _, view ->
+                var titleNode = view.findViewById<TextView>(R.id.node_title)
+                titleNode.setText(data)
+                node.addChildNode(childNode)
+            })
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,68 +56,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 config.augmentedImageDatabase = db;
 
             }
-            onSessionUpdated = { session, frame ->
+            onSessionUpdated = { _, frame ->
                 frame.getUpdatedAugmentedImages().forEach { augmentedImage ->
                     if (augmentedImageNodes.none { it.imageName == augmentedImage.name }) {
                         val augmentedImageNode = AugmentedImageNode(engine, augmentedImage).apply {
                             Log.i("Augmented Image",augmentedImage.name)
                             when (augmentedImage.name) {
                                 "FL01-OVN-M002.png" -> {
-                                    addChildNode(
-                                        ModelNode(
-                                            modelInstance = modelLoader.createModelInstance(
-                                                assetFileLocation = "models/FL01-OVN-M002.glb"
-                                            ),
-                                            scaleToUnits = 0.5f,
-                                            centerOrigin = Position(x= 0.0f, y=0.0f, z=0.5f ),
-                                        )
-//                                        ImageNode(
-//                                            materialLoader = materialLoader,
-//                                            bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.fl01_ovn_m002_t)
-//                                        )
-                                    )
+                                    generateViewNode(requireContext(), this,"FL01-OVN-M002")
                                 }
                                 "FL01-INV-M001.png" -> {
-                                    addChildNode(
-                                        ModelNode(
-                                            modelInstance = modelLoader.createModelInstance(
-                                                assetFileLocation = "models/FL01-INV-M001.glb"
-                                            ),
-                                            scaleToUnits = 0.1f,
-                                            centerOrigin = Position(0.0f)
-                                        )
-                                    )
+                                    generateViewNode(requireContext(), this,"FL01-INV-M001")
                                 }
                                 "FL01-UIT-M008.png" -> {
-                                    addChildNode(
-                                        ModelNode(
-                                            modelInstance = modelLoader.createModelInstance(
-                                                assetFileLocation = "models/FL01-UIT-M008.glb"
-                                            ),
-                                            scaleToUnits = 0.1f,
-                                            centerOrigin = Position(0.0f)
-                                        )
-//                                        ImageNode(
-//                                            materialLoader = materialLoader,
-//                                            bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.fl01_uit_m008_t)
-//                                        )
-                                    )
+                                    generateViewNode(requireContext(), this,"FL01-UIT-M008")
                                 }
                                 else -> {
-                                    addChildNode(
-                                        ModelNode(
-                                            modelInstance = modelLoader.createModelInstance(
-                                                assetFileLocation = "models/FL01-UIT-M008.glb"
-                                            ),
-
-                                            scaleToUnits = 0.1f,
-                                            centerOrigin = Position(0.0f)
-                                        )
-//                                        ImageNode(
-//                                            materialLoader = materialLoader,
-//                                            bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.fl01_inv_m001_t)
-//                                        )
-                                    )
+                                    //Do Nothing
                                 }
                             }
                         }
@@ -102,11 +80,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         augmentedImageNodes += augmentedImageNode
                     }
                 }
-            }
-            onTouchEvent = {
-                    e, hitresult ->
-                Log.i("Touched",hitresult?.node.toString())
-                true
             }
         }
     }
