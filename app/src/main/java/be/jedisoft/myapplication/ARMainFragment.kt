@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import be.jedisoft.myapplication.persistence.mockupdb.datarepository
+import be.jedisoft.myapplication.persistence.models.MaintenanceObject
 import com.google.ar.core.AugmentedImageDatabase
 import com.google.ar.sceneform.rendering.ViewAttachmentManager
 import io.github.sceneview.ar.ARSceneView
@@ -26,6 +28,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     val augmentedImageNodes = mutableListOf<AugmentedImageNode>()
 
     fun generateViewNode(context: Context, node: Node, data: String){
+
+        //Get the maintenace object
+        val maintenanceObject = datarepository.getMaintenanceObject(data);
+
         lifecycleScope.launch {
             val attachmentManager =
                 ViewAttachmentManager(context, sceneView)
