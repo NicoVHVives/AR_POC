@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="wrap_content"
@@ -12,22 +14,12 @@
     android:gravity="center_horizontal">
 
 
-    <TextView
-        android:id="@+id/node_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        tools:text="@string/app_name" />
 
-    <TextView
-        android:id="@+id/node_dist"
+    <be.jedisoft.myapplication.ui.views.MaintenanceObjectView
+        android:id="@+id/maintenanceObjectView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        tools:text="TEST Application" />
+        />
 
 </LinearLayout>
+

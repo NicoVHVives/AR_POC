@@ -4,11 +4,13 @@ import be.jedisoft.myapplication.persistence.models.MaintenanceObject
 import be.jedisoft.myapplication.persistence.models.MaintenanceParameter
 import be.jedisoft.myapplication.persistence.models.MaintenanceType
 import be.jedisoft.myapplication.persistence.models.ParameterType
+import java.util.Dictionary
 
 class datarepository {
     companion object {
-        fun getMaintenanceObject(objectName : String) : MaintenanceObject{
-            return MaintenanceObject(
+
+        var maintenanceObjects: HashMap<String, MaintenanceObject> = hashMapOf(
+            "FL01-INV-M001" to MaintenanceObject(
                 id = "FL01-INV-M001",
                 type = MaintenanceType.Motor,
                 parameters = arrayOf(
@@ -31,15 +33,58 @@ class datarepository {
                         parameterType = ParameterType.NumericMinMax,
                         value = "29.47",
                         uom = "A",
-                        minValue =  30.0f,
+                        minValue = 30.0f,
                         maxValue = 45.0f
                     )
                 )
+            ),
+            "FL01-OVN-M002" to MaintenanceObject(
+                id = "FL01-OVN-M002",
+                type = MaintenanceType.Valve,
+                parameters = arrayOf(
+                    MaintenanceParameter(
+                        name = "Aantal Schakelingen",
+                        parameterType = ParameterType.Numeric,
+                        value = "1839",
+                        uom = ""
+                    )
+                )
+            ),
+            "FL01-UIT-M008" to MaintenanceObject(
+                id = "FL01-UIT-M008",
+                type = MaintenanceType.Measurement,
+                parameters = arrayOf(
+                    MaintenanceParameter(
+                        name = "Laatste Kalibratie",
+                        parameterType = ParameterType.Text,
+                        value = "2024/07/15 12:34:15",
+                        uom = ""
+                    ),
+                    MaintenanceParameter(
+                        name = "Meetwaarde",
+                        parameterType = ParameterType.NumericMinMax,
+                        value = "6.48",
+                        uom = "pH",
+                        minValue = 6.0f,
+                        maxValue = 9.2f
+                    )
+                )
+            ),
+        )
+
+
+        fun getMaintenanceObject(objectName: String): MaintenanceObject {
+            return maintenanceObjects[objectName] ?: MaintenanceObject(
+            id = "FL01-UIT-M008",
+            type = MaintenanceType.Measurement,
+            parameters = arrayOf()
             )
+
         }
     }
 
-
-
-
 }
+
+
+
+

@@ -4,11 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import be.jedisoft.myapplication.persistence.mockupdb.datarepository
-import be.jedisoft.myapplication.persistence.models.MaintenanceObject
+import be.jedisoft.myapplication.ui.views.MaintenanceObjectView
 import com.google.ar.core.AugmentedImageDatabase
 import com.google.ar.sceneform.rendering.ViewAttachmentManager
 import io.github.sceneview.ar.ARSceneView
@@ -29,8 +28,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     fun generateViewNode(context: Context, node: Node, data: String){
 
-        //Get the maintenace object
-        val maintenanceObject = datarepository.getMaintenanceObject(data);
+        //Get the maintenance object
+        val maintenanceObject = datarepository.getMaintenanceObject(data)
 
         lifecycleScope.launch {
             val attachmentManager =
@@ -40,9 +39,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             //Rotate the node so that it come's readable above the QR-Code
             childNode.rotation = Rotation(0.0f,90.0f,0.0f)
             childNode.scale = Scale(-1.0f,1f, 1f)
+
             childNode.loadView(context, R.layout.card_view,  onLoaded = { _, view ->
-                val titleNode = view.findViewById<TextView>(R.id.node_title)
-                titleNode.setText(data)
+                val titleNode = view.findViewById<MaintenanceObjectView>(R.id.maintenanceObjectView)
+                titleNode.setMaintenanceObject(maintenanceObject)
                 node.addChildNode(childNode)
             })
         }
