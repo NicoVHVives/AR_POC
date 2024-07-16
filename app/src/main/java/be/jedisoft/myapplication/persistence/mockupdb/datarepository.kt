@@ -4,7 +4,6 @@ import be.jedisoft.myapplication.persistence.models.MaintenanceObject
 import be.jedisoft.myapplication.persistence.models.MaintenanceParameter
 import be.jedisoft.myapplication.persistence.models.MaintenanceType
 import be.jedisoft.myapplication.persistence.models.ParameterType
-import java.util.Dictionary
 
 class datarepository {
     companion object {
