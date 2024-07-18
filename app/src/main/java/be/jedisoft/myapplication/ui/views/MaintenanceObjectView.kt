@@ -3,7 +3,9 @@ package be.jedisoft.myapplication.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +31,7 @@ class MaintenanceObjectView @JvmOverloads constructor(
             objectNameTextView = findViewById(R.id.maint_obj_name)
             typeNameTextView = findViewById(R.id.maint_type_name)
             parameterRecyclerView = findViewById(R.id.maint_param_view)
+
         }
 
         fun setMaintenanceObject(obj: MaintenanceObject) {

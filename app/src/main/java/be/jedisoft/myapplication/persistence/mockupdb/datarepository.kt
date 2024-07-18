@@ -12,6 +12,7 @@ class datarepository {
             "FL01-INV-M001" to MaintenanceObject(
                 id = "FL01-INV-M001",
                 type = MaintenanceType.Motor,
+                documentUri = "FL01-INV-M001.pdf",
                 parameters = arrayOf(
                     MaintenanceParameter(
                         name = "Temperatuur",
@@ -40,6 +41,7 @@ class datarepository {
             "FL01-OVN-M002" to MaintenanceObject(
                 id = "FL01-OVN-M002",
                 type = MaintenanceType.Valve,
+                documentUri = "FL01-OVN-M002.pdf",
                 parameters = arrayOf(
                     MaintenanceParameter(
                         name = "Aantal Schakelingen",
@@ -51,6 +53,7 @@ class datarepository {
             ),
             "FL01-UIT-M008" to MaintenanceObject(
                 id = "FL01-UIT-M008",
+                documentUri = "FL01-UIT-M008.pdf",
                 type = MaintenanceType.Measurement,
                 parameters = arrayOf(
                     MaintenanceParameter(
@@ -74,8 +77,9 @@ class datarepository {
 
         fun getMaintenanceObject(objectName: String): MaintenanceObject {
             return maintenanceObjects[objectName] ?: MaintenanceObject(
-            id = "FL01-UIT-M008",
+            id = "Unregistered Object",
             type = MaintenanceType.Measurement,
+            documentUri = "",
             parameters = arrayOf()
             )
 

@@ -28,6 +28,7 @@ data class MaintenanceParameter(
 data class MaintenanceObject (
 
     val id: String,
+    val documentUri: String,
     val type: MaintenanceType,
     val parameters: Array<MaintenanceParameter>
 
