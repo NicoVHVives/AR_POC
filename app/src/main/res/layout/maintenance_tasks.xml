@@ -7,12 +7,12 @@
 
 
     <ImageView
-        android:id="@+id/manualImage"
+        android:id="@+id/manualTask"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_weight="1"
         android:contentDescription="Show Manual"
         android:paddingVertical="10dp"
-        app:srcCompat="@drawable/_623395" />
+        app:srcCompat="@drawable/_345800" />
 
 </LinearLayout>

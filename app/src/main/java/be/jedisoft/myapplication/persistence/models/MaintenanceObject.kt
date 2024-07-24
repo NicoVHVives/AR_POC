@@ -25,11 +25,18 @@ data class MaintenanceParameter(
     val maxValue: Float = 0f
 )
 
+data class MaintenanceTask(
+    val sequenceNo: Int,
+    val taskExplanation: String,
+    var taskFinished: Boolean
+)
+
 data class MaintenanceObject (
 
     val id: String,
     val documentUri: String,
     val type: MaintenanceType,
-    val parameters: Array<MaintenanceParameter>
+    val parameters: Array<MaintenanceParameter>,
+    val tasks: Array<MaintenanceTask>
 
 )

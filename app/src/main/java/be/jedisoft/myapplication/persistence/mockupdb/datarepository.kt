@@ -2,6 +2,7 @@ package be.jedisoft.myapplication.persistence.mockupdb
 
 import be.jedisoft.myapplication.persistence.models.MaintenanceObject
 import be.jedisoft.myapplication.persistence.models.MaintenanceParameter
+import be.jedisoft.myapplication.persistence.models.MaintenanceTask
 import be.jedisoft.myapplication.persistence.models.MaintenanceType
 import be.jedisoft.myapplication.persistence.models.ParameterType
 
@@ -36,6 +37,29 @@ class datarepository {
                         minValue = 30.0f,
                         maxValue = 45.0f
                     )
+                ),
+                tasks = arrayOf(
+                    MaintenanceTask(
+                        sequenceNo = 1,
+                        taskExplanation = "Draai de 4 schroeven van \n de verdeeldoos open",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 2,
+                        taskExplanation = "Visuele controle \n verdeeldoos",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 3,
+                        taskExplanation = "Controleer de verbindingen \n met de momentsleutel",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 4,
+                        taskExplanation = "Draai de 4 schroeven van \n de verdeeldoos terug vast",
+                        taskFinished = false
+                    )
+
                 )
             ),
             "FL01-OVN-M002" to MaintenanceObject(
@@ -48,6 +72,13 @@ class datarepository {
                         parameterType = ParameterType.Numeric,
                         value = "1839",
                         uom = ""
+                    )
+                ),
+                tasks = arrayOf(
+                    MaintenanceTask(
+                        sequenceNo = 1,
+                        taskExplanation = "Controleer werking van de klep \n door manueel te schakelen",
+                        taskFinished = false
                     )
                 )
             ),
@@ -70,6 +101,29 @@ class datarepository {
                         minValue = 6.0f,
                         maxValue = 9.2f
                     )
+                ),
+                tasks = arrayOf(
+                    MaintenanceTask(
+                        sequenceNo = 1,
+                        taskExplanation = "Dompel de sonde onder in PH4 \n schrijf de uitgelezen waarde \n neer",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 2,
+                        taskExplanation = "Dompel de sonde onder in PH7 \n schrijf de uitgelezen waarde \n neer",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 3,
+                        taskExplanation = "Kalibreer het toestel \n aan de hand van de uitgelezen waarden",
+                        taskFinished = false
+                    ),
+                    MaintenanceTask(
+                        sequenceNo = 4,
+                        taskExplanation = "Controleer door de sonde \n terug onder te dompelen in \n PH4 en PH7",
+                        taskFinished = false
+                    )
+
                 )
             ),
         )
@@ -80,7 +134,8 @@ class datarepository {
             id = "Unregistered Object",
             type = MaintenanceType.Measurement,
             documentUri = "",
-            parameters = arrayOf()
+            parameters = arrayOf()            ,
+            tasks = arrayOf()
             )
 
         }

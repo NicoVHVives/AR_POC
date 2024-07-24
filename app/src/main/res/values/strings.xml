@@ -2,4 +2,6 @@
     <string name="app_name">POC Maintenance</string>
     <string name="nav_mainscreen">Main screen</string>
     <string name="app_bar_back_button">Go Back</string>
+    <string name="task_task"> Task </string>
+    <string name="task_of"> of </string>
 </resources>

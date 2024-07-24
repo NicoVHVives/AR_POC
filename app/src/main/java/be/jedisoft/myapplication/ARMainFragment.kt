@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import be.jedisoft.myapplication.common.NodeExecutors
 import be.jedisoft.myapplication.persistence.mockupdb.datarepository
@@ -27,23 +28,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     val augmentedImageNodes = mutableListOf<AugmentedImageNode>()
 
-
-    fun generateButtonNode(context: Context, node:Node, data:String, layout:Int){
+    fun generateMenuButtonNode(context: Context, node:Node, data:String, layout:Int, menuItem: MenuItem){
 
         lifecycleScope.launch {
             val attachmentManager =
                 ViewAttachmentManager(context, sceneView)
             attachmentManager.onResume()
-            val childNode = MaintenanceViewNode(sceneView.engine, sceneView.modelLoader, attachmentManager)
+            val childNode = MenuItemViewNode(sceneView.engine, sceneView.modelLoader, attachmentManager, menuItem)
             //Rotate the node so that it come's readable above the QR-Code
             childNode.rotation = Rotation(0.0f,0.0f,0.0f)
             childNode.scale = Scale(-1.0f,1f, 1f)
-            childNode.position = Position(-1f,0.5f,0.0f)
+
+            //val xPos = menuItem.value.toFloat() * -1f
+            val yPos = 1.0f - menuItem.value.toFloat() * 0.5f
+
+
+            childNode.position = Position(-1f,yPos,0.0f)
             childNode.tag = data
             childNode.maintenanceNodeType = MaintenanceNodeType.ButtonNode
-            childNode.name = data + "|MANUAL"
+            childNode.name = data
             childNode.onNodeTouched = {
-                NodeExecutors.ManualButtonClicked(data,context)
+                NodeExecutors.MenuButtonClicked(data,context,menuItem,node,sceneView.engine, sceneView.modelLoader, attachmentManager, lifecycleScope)
             }
             childNode.loadView(context,layout,  onLoaded = { _, view ->
                 node.addChildNode(childNode)
@@ -60,15 +65,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             val attachmentManager =
                 ViewAttachmentManager(context, sceneView)
             attachmentManager.onResume()
-            val childNode = MaintenanceViewNode(sceneView.engine, sceneView.modelLoader, attachmentManager)
+            val childNode = OverviewViewNode(sceneView.engine, sceneView.modelLoader, attachmentManager, maintenanceObject)
             //Rotate the node so that it come's readable above the QR-Code
             childNode.rotation = Rotation(0.0f,90.0f,0.0f)
             childNode.scale = Scale(-1.0f,1f, 1f)
             childNode.tag = data
             childNode.maintenanceNodeType = MaintenanceNodeType.Overview
-            childNode.name = data + "|MAINTENANCE"
+            childNode.name = data
             childNode.onNodeTouched = {
-                generateButtonNode(context,childNode,data,R.layout.maintenance_manual)
+                generateMenuButtonNode(context,childNode,data,R.layout.maintenance_manual, MenuItem.OpenManual)
+                generateMenuButtonNode(context,childNode,data,R.layout.maintenance_tasks, MenuItem.OpenTasks)
             }
             childNode.loadView(context, R.layout.card_view,  onLoaded = { _, view ->
                 val titleNode = view.findViewById<MaintenanceObjectView>(R.id.maintenanceObjectView)
@@ -101,18 +107,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                 "FL01-OVN-M002.png" -> {
 
                                     generateMaintenanceNode(requireContext(), this,"FL01-OVN-M002")
-                                    //generateManualNode(requireContext(), this,"FL01-OVN-M002")
+
                                 }
                                 "FL01-INV-M001.png" -> {
                                     generateMaintenanceNode(requireContext(), this,"FL01-INV-M001")
-                                    //generateManualNode(requireContext(), this,"FL01-INV-M001")
+
                                 }
                                 "FL01-UIT-M008.png" -> {
                                     generateMaintenanceNode(requireContext(), this,"FL01-UIT-M008")
-                                    //generateManualNode(requireContext(), this,"FL01-UIT-M008")
+
                                 }
                                 else -> {
-                                    //Do Nothing
+
                                 }
                             }
 
