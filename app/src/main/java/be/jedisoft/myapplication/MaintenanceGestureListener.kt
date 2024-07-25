@@ -42,12 +42,12 @@ class MaintenanceGestureListener() :
         if(node != null) {
             if(node is TaskNode){
                 var direction: Int = 0
-                if((e1?.getX()?.minus(e2.getX()))!!.compareTo(-100.0f) < 0 ){
-                    direction = 1 //0 = swipeNext (RTL)
+                if((e1?.getX()?.minus(e2.getX()))!!.compareTo(-100.0f) < 0 || (e1?.getY()?.minus(e2.getY()))!!.compareTo(-100.0f) < 0){
+                    direction = -1 //-1 = swipeNext (LTR)
                     Log.i("Maintenance", "On fling event LTR")
                 }
-                if((e1?.getX()?.minus(e2.getX()))!!.compareTo(100.0f) > 0 ){
-                    direction = -1 //1 = swipePrevious (LTR)
+                else if((e1?.getX()?.minus(e2.getX()))!!.compareTo(100.0f) > 0 || (e1?.getY()?.minus(e2.getY()))!!.compareTo(100.0f) > 0 ){
+                    direction = 1 //1 = swipePrevious (RTL)
                     Log.i("Maintenance", "On fling event RTL")
                 }
                 val taskNode = node as TaskNode
